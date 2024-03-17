@@ -18,8 +18,8 @@ EUR	978	Євро
 import lombok.Data;
 @Data
 public class MonoBank {
-    private Integer currencyCodeA;
-    private Integer currencyCodeB;
+    private int currencyCodeA;
+    private int currencyCodeB;
     private Integer date;
     private Float rateSell;
     private Float rateBuy;

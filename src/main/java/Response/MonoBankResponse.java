@@ -12,14 +12,12 @@ import java.net.http.HttpResponse;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import static Response.BankConstants.*;
+
 public class MonoBankResponse {
-    private static final String MONO_API = "https://api.monobank.ua/bank/currency";
-    private static final int MONOBANK_USD_CODE = 840;
-    private static final int MONOBANK_EUR_CODE = 978;
-    private static final String PATTERN_DECIMAL_FORMAT_2 = "#0.00";
-    private static final String PATTERN_DECIMAL_FORMAT_3 = "#0.000";
-    private static final String PATTERN_DECIMAL_FORMAT_4 = "#0.0000";
-    public static List<MonoBank> currencyExchange;
+
+
+    private static List<MonoBank> currencyExchange;
 
     public static String getMonoBankCurrencyExchange(String currency, int numberCharCurrency) {
         Gson gsonMapper = new GsonBuilder().setPrettyPrinting().create();
@@ -70,9 +68,9 @@ public class MonoBankResponse {
 
     private static String getCurrencyName(int currencyCode) {
         switch (currencyCode) {
-            case MONOBANK_USD_CODE:
+            case USD_CODE:
                 return "USD";
-            case MONOBANK_EUR_CODE:
+            case EUR_CODE:
                 return "EUR";
             default:
                 return "Unknown currency";
@@ -82,9 +80,9 @@ public class MonoBankResponse {
     private static int getMonoBankCurrencyCode(String currency) {
         switch (currency) {
             case "USD":
-                return MONOBANK_USD_CODE;
+                return USD_CODE;
             case "EUR":
-                return MONOBANK_EUR_CODE;
+                return EUR_CODE;
             default:
                 return -1;
         }
