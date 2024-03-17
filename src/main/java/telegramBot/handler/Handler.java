@@ -1,10 +1,11 @@
 package telegramBot.handler;
 
 import org.telegram.telegrambots.meta.api.objects.Update;
-import telegramBot.handler.MessageSender;
+import telegramBot.users.UsersData;
 
 public class Handler {
     private MessageSender messageSender = new MessageSender();
+    private UsersData usersData = new UsersData();
 
     public void messageHandler(Update update){
         if (update.hasMessage() && update.getMessage().hasText()) {
@@ -20,6 +21,7 @@ public class Handler {
         switch (messageText) {
             case "/start":
                 messageSender.sendStartMessage(chatId);
+                usersData.addUser(chatId);
                 break;
             case "Get information":
                 messageSender.sendInfoMessage(chatId);
