@@ -25,25 +25,36 @@ public class MyTelegramBot extends TelegramLongPollingBot {
             } else if (messageText.equals("Settings")) {
                 sendSettingsMessage(chatId);
             }
+        } else if (update.hasCallbackQuery()) {
+
+            String callbackData = update.getCallbackQuery().getData();
+            long chatId = update.getCallbackQuery().getMessage().getChatId();
+
+            if (callbackData.equals("settings_decimal_places")) {
+
+            } else if (callbackData.equals("settings_bank")) {
+
+            } else if (callbackData.equals("settings_currencies")) {
+
+            } else if (callbackData.equals("settings_notification_time")) {
+
+            }
         }
     }
 
     private void sendStartMessage(long chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
-        message.setText("Greetings! This bot will help you track the current exchange rate");
+        message.setText("Welcome to the Exchange Rate Bot!\n\nYou can use the following commands:");
 
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+        keyboardMarkup.setResizeKeyboard(true);
         List<KeyboardRow> keyboard = new ArrayList<>();
 
         KeyboardRow row1 = new KeyboardRow();
-        row1.add("Start");
+        row1.add("Get information");
+        row1.add("Settings");
         keyboard.add(row1);
-
-        KeyboardRow row2 = new KeyboardRow();
-        row2.add("Get information");
-        row2.add("Settings");
-        keyboard.add(row2);
 
         keyboardMarkup.setKeyboard(keyboard);
         message.setReplyMarkup(keyboardMarkup);
@@ -58,7 +69,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private void sendInfoMessage(long chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
-        message.setText("The functionality is still under development");
+        message.setText("The functionality is still under development.");
         try {
             execute(message);
         } catch (TelegramApiException e) {
@@ -69,7 +80,25 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private void sendSettingsMessage(long chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
-        message.setText("The functionality is still under development");
+        message.setText("Please select a setting:");
+
+        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+        keyboardMarkup.setResizeKeyboard(true);
+        List<KeyboardRow> keyboard = new ArrayList<>();
+
+        KeyboardRow row1 = new KeyboardRow();
+        row1.add("Decimal Places");
+        row1.add("Bank");
+        keyboard.add(row1);
+
+        KeyboardRow row2 = new KeyboardRow();
+        row2.add("Currencies");
+        row2.add("Notification Time");
+        keyboard.add(row2);
+
+        keyboardMarkup.setKeyboard(keyboard);
+        message.setReplyMarkup(keyboardMarkup);
+
         try {
             execute(message);
         } catch (TelegramApiException e) {
