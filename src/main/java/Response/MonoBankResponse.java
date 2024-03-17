@@ -19,7 +19,7 @@ public class MonoBankResponse {
 
     private static List<MonoBank> currencyExchange;
 
-    public static String getMonoBankCurrencyExchange(String currency, int numberCharCurrency) {
+    public static String getMonoBankCurrencyExchange(String UserCurrency, int numberCharCurrency) {
         Gson gsonMapper = new GsonBuilder().setPrettyPrinting().create();
         HttpClient httpClient = HttpClient.newHttpClient();
 
@@ -32,7 +32,7 @@ public class MonoBankResponse {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             currencyExchange = gsonMapper.fromJson(response.body(), new TypeToken<List<MonoBank>>() {}.getType());
 
-            int currencyCode = getMonoBankCurrencyCode(currency); // Отримати код валюти з рядка currency
+            int currencyCode = getMonoBankCurrencyCode(UserCurrency); // Отримати код валюти з рядка currency
             return displayCurrency(currencyCode, numberCharCurrency); // Викликати метод displayCurrency з отриманим кодом валюти та форматом числа
         } catch (IOException | InterruptedException e) {
             System.err.println("Error sending GET request: " + e.getMessage());

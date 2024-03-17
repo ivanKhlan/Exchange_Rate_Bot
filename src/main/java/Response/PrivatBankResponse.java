@@ -13,20 +13,22 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import static Response.BankConstants.*;
-public class NbuBankResponse {
-    private static List<NbuBank> currencyExchange;
-    public static String getNbuBankCurrencyExchange(String userCurrency, int numberCharCurrency) {
+
+public class PrivatBankResponse {
+    private static List<PrivatBank> currencyExchange;
+
+    public static String getPrivatBankCurrencyExchange(String userCurrency, int numberCharCurrency) {
         Gson gsonMapper = new GsonBuilder().setPrettyPrinting().create();
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(NBU_API))
+                .uri(URI.create(PRIVAT_API))
                 .header("Content-Type", "application/json")
                 .GET()
                 .build();
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            currencyExchange = gsonMapper.fromJson(response.body(), new TypeToken<List<NbuBank>>() {}.getType());
+            currencyExchange = gsonMapper.fromJson(response.body(), new TypeToken<List<PrivatBank>>() {}.getType());
 
             return displayCurrency(userCurrency, numberCharCurrency); // Викликати метод displayCurrency з отриманим кодом валюти та форматом числа
         } catch (IOException | InterruptedException e) {
@@ -38,9 +40,9 @@ public class NbuBankResponse {
     private static String displayCurrency(String userCurrency, int numberCharCurrency) {
         DecimalFormat decimalFormat = chooseDecimalFormat(numberCharCurrency);
         if (currencyExchange != null) {
-            for (NbuBank nbuBank : currencyExchange) {
-                if (userCurrency.equals(nbuBank.getCc())) {
-                    return userCurrency + ": buy: " + decimalFormat.format(nbuBank.getRate());
+            for (PrivatBank privatBank : currencyExchange) {
+                if (userCurrency.equals(privatBank.getCcy())) {
+                    return userCurrency + ": buy: " + decimalFormat.format(Double.parseDouble(privatBank.getBuy())) + " sell: " + decimalFormat.format(Double.parseDouble(privatBank.getSale()));
                 }
             }
         }
@@ -49,14 +51,10 @@ public class NbuBankResponse {
 
     // Метод для відображення кількості знаків після коми
     private static DecimalFormat chooseDecimalFormat(int numberCharCurrency) {
-        switch (numberCharCurrency) {
-            case 3:
-                return new DecimalFormat(PATTERN_DECIMAL_FORMAT_3);
-            case 4:
-                return new DecimalFormat(PATTERN_DECIMAL_FORMAT_4);
-            default:
-                return new DecimalFormat(PATTERN_DECIMAL_FORMAT_2);
-        }
+        return switch (numberCharCurrency) {
+            case 3 -> new DecimalFormat(PATTERN_DECIMAL_FORMAT_3);
+            case 4 -> new DecimalFormat(PATTERN_DECIMAL_FORMAT_4);
+            default -> new DecimalFormat(PATTERN_DECIMAL_FORMAT_2);
+        };
     }
-
 }

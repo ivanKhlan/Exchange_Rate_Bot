@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static Response.MonoBankResponse.*;
+import static Response.NbuBankResponse.*;
 
 
 public class MyBot extends TelegramLongPollingBot {
@@ -44,6 +45,7 @@ public class MyBot extends TelegramLongPollingBot {
                     execute(
                             SendMessage.builder()
                                     .text(getMonoBankCurrencyExchange("EUR", 4))
+//                                    .text(getNbuBankCurrencyExchange("USD", 2))
                                     .chatId(message.getChatId().toString())
                                     .replyMarkup(InlineKeyboardMarkup.builder().build())
                                     .build());
