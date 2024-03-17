@@ -1,48 +1,17 @@
-package TelegramStart;
+package telegramBot.handler;
 
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import telegramBot.utils.BotSender;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTelegramBot extends TelegramLongPollingBot {
-
-    @Override
-    public void onUpdateReceived(Update update) {
-        if (update.hasMessage() && update.getMessage().hasText()) {
-            String messageText = update.getMessage().getText();
-            long chatId = update.getMessage().getChatId();
-
-            if (messageText.equals("/start")) {
-                sendStartMessage(chatId);
-            } else if (messageText.equals("Get information")) {
-                sendInfoMessage(chatId);
-            } else if (messageText.equals("Settings")) {
-                sendSettingsMessage(chatId);
-            }
-        } else if (update.hasCallbackQuery()) {
-
-            String callbackData = update.getCallbackQuery().getData();
-            long chatId = update.getCallbackQuery().getMessage().getChatId();
-
-            if (callbackData.equals("settings_decimal_places")) {
-
-            } else if (callbackData.equals("settings_bank")) {
-
-            } else if (callbackData.equals("settings_currencies")) {
-
-            } else if (callbackData.equals("settings_notification_time")) {
-
-            }
-        }
-    }
-
-    private void sendStartMessage(long chatId) {
+public class MessageSender {
+    private BotSender botSender = new BotSender();
+    public void sendStartMessage(long chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setText("Welcome to the Exchange Rate Bot!\n\nYou can use the following commands:");
@@ -60,24 +29,24 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         message.setReplyMarkup(keyboardMarkup);
 
         try {
-            execute(message);
+            botSender.execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
     }
 
-    private void sendInfoMessage(long chatId) {
+    public void sendInfoMessage(long chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setText("The functionality is still under development.");
         try {
-            execute(message);
+            botSender.execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
     }
 
-    private void sendSettingsMessage(long chatId) {
+    public void sendSettingsMessage(long chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setText("Please select a setting:");
@@ -96,23 +65,29 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         row2.add("Notification Time");
         keyboard.add(row2);
 
+        KeyboardRow row3 = new KeyboardRow();
+        row3.add("Back");
+        keyboard.add(row3);
+
         keyboardMarkup.setKeyboard(keyboard);
         message.setReplyMarkup(keyboardMarkup);
 
         try {
-            execute(message);
+            botSender.execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public String getBotUsername() {
-        return "Jhecq01DemoBot";
+    public void sendResponse(long chatId, String response) {
+        SendMessage message = new SendMessage();
+        message.setChatId(chatId);
+        message.setText(response);
+        try {
+            botSender.execute(message);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Override
-    public String getBotToken() {
-        return "6839356274:AAH8CkQ7LVpJLoVBRTnR23FjYxMJhD4qe1g";
-    }
 }
