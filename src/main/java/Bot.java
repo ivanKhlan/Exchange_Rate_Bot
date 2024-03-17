@@ -11,9 +11,9 @@ import java.util.List;
 
 public class Bot extends TelegramLongPollingBot {
 
-    public static final String BEGIN_MESSAGE = "\u041B\u0430\u0441\u043A\u0430\u0432\u043E \u043F\u0440\u043E\u0441\u0438\u043C\u043E. \u0426\u0435\u0439 \u0431\u043E\u0442 \u0434\u043E\u043F\u043E\u043C\u043E\u0436\u0435 \u0432\u0456\u0434\u0441\u043B\u0456\u0434\u043A\u043E\u0432\u0443\u0432\u0430\u0442\u0438 \u0430\u043A\u0442\u0443\u0430\u043B\u044C\u043D\u0456 \u043A\u0443\u0440\u0441\u0438 \u0432\u0430\u043B\u044E\u0442";
-    public static final String GET_INFO = "\u041E\u0442\u0440\u0438\u043C\u0430\u0442\u0438 \u0406\u043D\u0444\u043E";
-    public static final String SETTINGS = "\u041D\u0430\u043B\u0430\u0448\u0442\u0443\u0432\u0430\u043D\u043D\u044F";
+    public static final String BEGIN_MESSAGE = "Welcome. This bot will help you track current exchange rates.";
+    public static final String GET_INFO = "Get info";
+    public static final String SETTINGS = "Settings";
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -37,7 +37,7 @@ public class Bot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
         }else if (update.hasMessage() && update.getMessage().getText().equalsIgnoreCase(SETTINGS)){
-            message.setText("Get settings");
+            message.setText("Get info");
             try {
                 execute(message); // Call method to send the message
             } catch (TelegramApiException e) {
