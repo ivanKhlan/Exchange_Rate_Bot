@@ -1,19 +1,21 @@
 package telegramBot.handler;
 
+import jdk.dynalink.linker.LinkerServices;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import telegramBot.notifications.Notifications;
+import telegramBot.users.UserSettings;
 import telegramBot.users.UsersData;
-import telegramBot.currency.Currency;
 import telegramBot.currency.CurrencyManager;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 public class Handler {
     private MessageSender messageSender = new MessageSender();
     private UsersData usersData = new UsersData();
     private Notifications notifications = new Notifications();
     private CurrencyManager currencyManager = new CurrencyManager();
+
 
     public void messageHandler(Update update){
         if (update.hasMessage() && update.getMessage().hasText()) {
@@ -50,6 +52,9 @@ public class Handler {
                 break;
             case "Back":
                 messageSender.sendSettingsMessage(chatId);
+                break;
+            case "Back To Main Menu":
+                messageSender.sendStartMessage(chatId);
                 break;
             case "09:00":
                 handleNotification(chatId, 9, "You will receive notification at 09:00");

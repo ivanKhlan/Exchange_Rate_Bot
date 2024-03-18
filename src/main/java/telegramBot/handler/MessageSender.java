@@ -69,7 +69,7 @@ public class MessageSender {
         keyboard.add(row2);
 
         KeyboardRow row3 = new KeyboardRow();
-        row3.add("Back");
+        row3.add("Back To Main Menu");
         keyboard.add(row3);
 
         keyboardMarkup.setKeyboard(keyboard);
