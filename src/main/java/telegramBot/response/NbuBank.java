@@ -1,4 +1,4 @@
-package Response;
+package telegramBot.response;
 /*
 {
 "StartDate":"18.03.2024","TimeSign":"0000","CurrencyCode":"036","CurrencyCodeL":"AUD","Units":1,"Amount":25.4701

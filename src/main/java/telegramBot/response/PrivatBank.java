@@ -1,4 +1,4 @@
-package Response;
+package telegramBot.response;
 
 /*
 {"ccy":"EUR","base_ccy":"UAH","buy":"41.65000","sale":"42.65000"}

@@ -1,4 +1,4 @@
-package Response;
+package telegramBot.response;
 import lombok.experimental.UtilityClass;
 @UtilityClass
 public class BankConstants {

@@ -1,4 +1,4 @@
-package Response;
+package telegramBot.response;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,7 +12,7 @@ import java.net.http.HttpResponse;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import static Response.BankConstants.*;
+import static telegramBot.response.BankConstants.*;
 
 public class PrivatBankResponse {
     private static List<PrivatBank> currencyExchange;
