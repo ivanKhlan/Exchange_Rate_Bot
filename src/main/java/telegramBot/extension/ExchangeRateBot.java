@@ -8,13 +8,10 @@ import telegramBot.utils.BotConfig;
 public class ExchangeRateBot extends TelegramLongPollingBot {
     private Handler handler = new Handler();
 
-
     @Override
     public void onUpdateReceived(Update update) {
         handler.messageHandler(update);
     }
-
-
 
     @Override
     public String getBotUsername() {
