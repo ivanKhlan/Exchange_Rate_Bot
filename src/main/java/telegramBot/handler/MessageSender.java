@@ -4,6 +4,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import telegramBot.response.MonoBankResponse;
+import telegramBot.response.NbuBankResponse;
+import telegramBot.response.PrivatBankResponse;
 import telegramBot.users.UsersData;
 import telegramBot.utils.BotSender;
 import telegramBot.currency.Currency;
@@ -13,6 +16,7 @@ import java.util.List;
 
 public class MessageSender {
     private BotSender botSender = new BotSender();
+
 
     public void sendStartMessage(long chatId) {
         SendMessage message = new SendMessage();
@@ -39,14 +43,43 @@ public class MessageSender {
     }
 
     public void sendInfoMessage(long chatId, UsersData usersData) {
-        SendMessage message = new SendMessage();
-        message.setChatId(chatId);
-        message.setText("The functionality is still under development.");
-        try {
-            botSender.execute(message);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+
+        List<String> currencies = usersData.getUserById(chatId).get().getCurrencies();
+        List<String> banks = usersData.getUserById(chatId).get().getBanks();
+        int numOfCharacters = usersData.getUserById(chatId).get().getNumOfCharacters();
+
+
+        StringBuilder prettyText = new StringBuilder();
+
+        for (int i = 0; i < banks.size(); i++) {
+
+            if (banks.get(i).equals("mono")) {
+                for (int j = 0; j < currencies.size(); j++) {
+                    prettyText.append(MonoBankResponse.getMonoBankCurrencyExchange(currencies.get(j), numOfCharacters));
+                }
+
+            } else if (banks.get(i).equals("privat")) {
+                for (int j = 0; j < currencies.size(); j++) {
+                    prettyText.append(PrivatBankResponse.getPrivatBankCurrencyExchange(currencies.get(j), numOfCharacters));
+                }
+
+            } else if (banks.get(i).equals("nbu")) {
+                for (int j = 0; j < currencies.size(); j++) {
+                    prettyText.append(NbuBankResponse.getNbuBankCurrencyExchange(currencies.get(j), numOfCharacters));
+                }
+            }
         }
+
+        SendMessage responseMessage = new SendMessage();
+        responseMessage.setText(String.valueOf(prettyText));
+        responseMessage.setChatId(Long.toString(chatId));
+        try {
+
+            botSender.execute(responseMessage);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void sendSettingsMessage(long chatId) {
