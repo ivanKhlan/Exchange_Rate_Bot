@@ -19,7 +19,7 @@ public class MonoBankResponse {
 
     private static List<MonoBank> currencyExchange;
 
-    public static String getMonoBankCurrencyExchange(String UserCurrency, int numberCharCurrency) {
+    public static String getMonoBankCurrencyExchange(String UserCurrency, int numOfCharacters) {
         Gson gsonMapper = new GsonBuilder().setPrettyPrinting().create();
         HttpClient httpClient = HttpClient.newHttpClient();
 
@@ -33,20 +33,20 @@ public class MonoBankResponse {
             currencyExchange = gsonMapper.fromJson(response.body(), new TypeToken<List<MonoBank>>() {}.getType());
 
             int currencyCode = getMonoBankCurrencyCode(UserCurrency); // Отримати код валюти з рядка currency
-            return displayCurrency(currencyCode, numberCharCurrency); // Викликати метод displayCurrency з отриманим кодом валюти та форматом числа
+            return displayCurrency(currencyCode, numOfCharacters); // Викликати метод displayCurrency з отриманим кодом валюти та форматом числа
         } catch (IOException | InterruptedException e) {
             System.err.println("Error sending GET request: " + e.getMessage());
         }
         return "Error retrieving currency data.";
     }
 
-    public static String displayCurrency(int currencyCode, int numberCharCurrency) {
-        DecimalFormat decimalFormat = chooseDecimalFormat(numberCharCurrency);
+    public static String displayCurrency(int currencyCode, int numOfCharacters) {
+        DecimalFormat decimalFormat = chooseDecimalFormat(numOfCharacters);
         if (currencyExchange != null) {
             for (MonoBank monoBank : currencyExchange) {
                 if (monoBank.getCurrencyCodeA() == currencyCode) {
                     String currencyName = getCurrencyName(currencyCode);
-                    return currencyName + ": buy: " + decimalFormat.format(monoBank.getRateSell()) + " sell: " + decimalFormat.format(monoBank.getRateBuy());
+                    return "Exchange rate in the Monobank: " + currencyName + "/UAH \nbuy: " + decimalFormat.format(monoBank.getRateSell()) + "\nsell: " + decimalFormat.format(monoBank.getRateBuy());
                 }
             }
         }
@@ -78,10 +78,10 @@ public class MonoBankResponse {
     }
 
     private static int getMonoBankCurrencyCode(String currency) {
-        switch (currency) {
-            case "USD":
+        switch (currency.toLowerCase()) {
+            case "usd":
                 return USD_CODE;
-            case "EUR":
+            case "eur":
                 return EUR_CODE;
             default:
                 return -1;

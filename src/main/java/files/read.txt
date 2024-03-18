@@ -1,0 +1,3 @@
+    public static final String BOT_NAME = "BotForGoitBo";
+    public static final String BOT_TOKEN = "7147598467:AAHyZ2doRyqNM43wRFlkr-AGDGWXPjPv8FQ";
+    Bot_For_Goit

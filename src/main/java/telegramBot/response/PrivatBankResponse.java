@@ -41,8 +41,8 @@ public class PrivatBankResponse {
         DecimalFormat decimalFormat = chooseDecimalFormat(numberCharCurrency);
         if (currencyExchange != null) {
             for (PrivatBank privatBank : currencyExchange) {
-                if (userCurrency.equals(privatBank.getCcy())) {
-                    return userCurrency + ": buy: " + decimalFormat.format(Double.parseDouble(privatBank.getBuy())) + " sell: " + decimalFormat.format(Double.parseDouble(privatBank.getSale()));
+                if (userCurrency.equalsIgnoreCase(privatBank.getCcy())) {
+                    return "Exchange rate in the PrivatBank: " + userCurrency.toUpperCase() + "/UAH \nbuy: " + decimalFormat.format(Double.parseDouble(privatBank.getBuy())) + "\nsell: " + decimalFormat.format(Double.parseDouble(privatBank.getSale()));
                 }
             }
         }
