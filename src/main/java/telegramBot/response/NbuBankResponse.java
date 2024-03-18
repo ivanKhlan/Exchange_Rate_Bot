@@ -39,8 +39,8 @@ public class NbuBankResponse {
         DecimalFormat decimalFormat = chooseDecimalFormat(numberCharCurrency);
         if (currencyExchange != null) {
             for (NbuBank nbuBank : currencyExchange) {
-                if (userCurrency.toUpperCase().equals(nbuBank.getCc())) {
-                    return userCurrency + ": buy: " + decimalFormat.format(nbuBank.getRate());
+                if (userCurrency.equalsIgnoreCase(nbuBank.getCc())) {
+                    return "Exchange rate in the NBU: " + userCurrency.toUpperCase() + "/UAH \nbuy: " + decimalFormat.format(nbuBank.getRate());
                 }
             }
         }
