@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
 @Data
 public class UsersData {
     private Map<Long, UserSettings> users;
@@ -19,7 +21,14 @@ public class UsersData {
         }
     }
 
-    private boolean containsUser(long chatId){
+    public boolean containsUser(long chatId){
         return users.containsKey(chatId);
+    }
+
+    public Optional<UserSettings> getUserById(long chatId){
+        if (users.containsKey(chatId)){
+            return Optional.of(users.get(chatId));
+        }
+        return Optional.empty();
     }
 }
