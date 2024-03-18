@@ -3,18 +3,23 @@ package telegramBot.handler;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import telegramBot.notifications.Notifications;
 import telegramBot.users.UsersData;
+import telegramBot.currency.Currency;
+import telegramBot.currency.CurrencyManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Handler {
     private MessageSender messageSender = new MessageSender();
     private UsersData usersData = new UsersData();
     private Notifications notifications = new Notifications();
+    private CurrencyManager currencyManager = new CurrencyManager();
 
     public void messageHandler(Update update){
         if (update.hasMessage() && update.getMessage().hasText()) {
             textMessageHandler(update);
         }
     }
-
 
     private void textMessageHandler(Update update){
         String messageText = update.getMessage().getText();
@@ -38,13 +43,13 @@ public class Handler {
                 messageSender.sendResponse(chatId, "You selected Bank setting.");
                 break;
             case "Currencies":
-                messageSender.sendResponse(chatId, "You selected Currencies setting.");
+                messageSender.sendCurrencyOptions(chatId, currencyManager.getCurrenciesWithBackButton());
                 break;
             case "Notification Time":
                 notifications.createNotificationMenu(chatId);
                 break;
             case "Back":
-                messageSender.sendStartMessage(chatId);
+                messageSender.sendSettingsMessage(chatId);
                 break;
             case "09:00":
                 handleNotification(chatId, 9, "You will receive notification at 09:00");
@@ -80,10 +85,20 @@ public class Handler {
                 handleNotification(chatId, 0, "You will not receive notifications");
                 break;
             default:
-                messageSender.sendResponse(chatId, "Invalid setting selection.");
+
+                if (messageText.startsWith("Select currency:")) {
+                    String currencyCode = messageText.substring(messageText.indexOf(":") + 2);
+                    if (currencyCode.equals("Back")) {
+                        messageSender.sendSettingsMessage(chatId);
+                    } else {
+                        currencyManager.toggleCurrencySelection(currencyCode);
+                        messageSender.sendCurrencyOptions(chatId, currencyManager.getCurrenciesWithBackButton());
+                    }
+                } else {
+                    messageSender.sendResponse(chatId, "Invalid setting selection.");
+                }
                 break;
         }
-
     }
 
     private void handleNotification(long chatId, int time, String response){
@@ -91,6 +106,4 @@ public class Handler {
         notifications.applyNotification(chatId, usersData);
         messageSender.sendResponse(chatId, response);
     }
-
-
 }
