@@ -4,6 +4,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import telegramBot.users.UsersData;
 import telegramBot.utils.BotSender;
 
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class MessageSender {
         }
     }
 
-    public void sendInfoMessage(long chatId) {
+    public void sendInfoMessage(long chatId, UsersData usersData) {
+
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setText("The functionality is still under development.");

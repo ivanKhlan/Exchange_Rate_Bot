@@ -31,4 +31,8 @@ public class UsersData {
         }
         return Optional.empty();
     }
+
+    public void setNotificationTimeByUserId(long chatId, int time){
+        getUserById(chatId).get().setNotificationTime(time);
+    }
 }

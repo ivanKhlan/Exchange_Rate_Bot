@@ -12,10 +12,10 @@ public class UserSettings {
     private int notificationTime;
 
     public UserSettings(){
-        numOfCharacters = 1;
-        banks = List.of("mono", "privat", "nbu");
-        currencies = List.of("usd", "eur", "uah");
-        notificationTime = 10;
+        numOfCharacters = 2;
+        banks = List.of("privat");
+        currencies = List.of("usd");
+        notificationTime = 9;
     }
 
     public void removeBank(String bankName){
