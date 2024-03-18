@@ -6,12 +6,14 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import telegramBot.users.UsersData;
 import telegramBot.utils.BotSender;
+import telegramBot.currency.Currency;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MessageSender {
     private BotSender botSender = new BotSender();
+
     public void sendStartMessage(long chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
@@ -37,7 +39,6 @@ public class MessageSender {
     }
 
     public void sendInfoMessage(long chatId, UsersData usersData) {
-
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setText("The functionality is still under development.");
@@ -68,7 +69,7 @@ public class MessageSender {
         keyboard.add(row2);
 
         KeyboardRow row3 = new KeyboardRow();
-        row3.add("Back");
+        row3.add("Back To Main Menu");
         keyboard.add(row3);
 
         keyboardMarkup.setKeyboard(keyboard);
@@ -92,4 +93,32 @@ public class MessageSender {
         }
     }
 
+    public void sendCurrencyOptions(long chatId, List<Currency> currencies) {
+        SendMessage message = new SendMessage();
+        message.setChatId(chatId);
+        message.setText("Please select currencies:");
+
+        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+        keyboardMarkup.setResizeKeyboard(true);
+        List<KeyboardRow> keyboard = new ArrayList<>();
+
+        for (Currency currency : currencies) {
+            KeyboardRow row = new KeyboardRow();
+            if (currency.isSelected()) {
+                row.add("✔" + currency.getCode());
+            } else {
+                row.add(currency.getCode());
+            }
+            keyboard.add(row);
+        }
+
+        keyboardMarkup.setKeyboard(keyboard);
+        message.setReplyMarkup(keyboardMarkup);
+
+        try {
+            botSender.execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
 }
