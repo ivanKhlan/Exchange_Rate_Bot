@@ -78,7 +78,7 @@ public class MonoBankResponse {
     }
 
     private static int getMonoBankCurrencyCode(String currency) {
-        switch (currency) {
+        switch (currency.toUpperCase()) {
             case "USD":
                 return USD_CODE;
             case "EUR":

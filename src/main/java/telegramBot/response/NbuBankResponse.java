@@ -39,7 +39,7 @@ public class NbuBankResponse {
         DecimalFormat decimalFormat = chooseDecimalFormat(numberCharCurrency);
         if (currencyExchange != null) {
             for (NbuBank nbuBank : currencyExchange) {
-                if (userCurrency.equals(nbuBank.getCc())) {
+                if (userCurrency.toUpperCase().equals(nbuBank.getCc())) {
                     return userCurrency + ": buy: " + decimalFormat.format(nbuBank.getRate());
                 }
             }
