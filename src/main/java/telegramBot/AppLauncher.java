@@ -12,17 +12,13 @@ import static telegramBot.response.PrivatBankResponse.getPrivatBankCurrencyExcha
 public class AppLauncher {
 
     public static void main(String[] args) {
-//        try {
-//            TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-//            botsApi.registerBot(new ExchangeRateBot());
-//            System.out.println("The bot has been successfully launched. It is ready to receive messages");
-//        } catch (TelegramApiException e) {
-//            e.printStackTrace();
-//        }
-//    }
-        System.out.println(getMonoBankCurrencyExchange("eur", 3));
-        System.out.println(getPrivatBankCurrencyExchange("uSd", 4));
-        System.out.println(getNbuBankCurrencyExchange("uSd", 4));
-
+        try {
+            TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
+            botsApi.registerBot(new ExchangeRateBot());
+            System.out.println("The bot has been successfully launched. It is ready to receive messages");
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
+
 }
