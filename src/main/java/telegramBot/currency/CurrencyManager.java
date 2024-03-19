@@ -1,5 +1,6 @@
 package telegramBot.currency;
 
+import com.vdurmont.emoji.EmojiParser;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ public class CurrencyManager {
         currencies = new ArrayList<>();
         currencies.add(new Currency("USD", false));
         currencies.add(new Currency("EUR", false));
-        currencies.add(new Currency("UAH", false));
     }
 
     public List<Currency> getCurrencies() {
@@ -22,7 +22,7 @@ public class CurrencyManager {
 
     public List<Currency> getCurrenciesWithBackButton() {
         List<Currency> currenciesWithBack = new ArrayList<>(currencies);
-        currenciesWithBack.add(new Currency("Back", false));
+        currenciesWithBack.add(new Currency(EmojiParser.parseToUnicode("\u2B05\uFE0F" + " Back"), false));
         return currenciesWithBack;
     }
 

@@ -1,5 +1,6 @@
 package telegramBot.handler;
 
+import com.vdurmont.emoji.EmojiParser;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -21,15 +22,15 @@ public class MessageSender {
     public void sendStartMessage(long chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
-        message.setText("Welcome to the Exchange Rate Bot!\n\nYou can use the following commands:");
+        message.setText(EmojiParser.parseToUnicode("Welcome to the Exchange Rate Bot!" + "\uD83D\uDC4B" + "\n\n" + "You can use the following commands" + "\uD83D\uDC47"));
 
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         keyboardMarkup.setResizeKeyboard(true);
         List<KeyboardRow> keyboard = new ArrayList<>();
 
         KeyboardRow row1 = new KeyboardRow();
-        row1.add("Get information");
-        row1.add("Settings");
+        row1.add(EmojiParser.parseToUnicode("Get information " + "\uD83D\uDDC8"));
+        row1.add(EmojiParser.parseToUnicode("Settings " + "\u2699\ufe0f"));
         keyboard.add(row1);
 
         keyboardMarkup.setKeyboard(keyboard);
@@ -92,17 +93,17 @@ public class MessageSender {
         List<KeyboardRow> keyboard = new ArrayList<>();
 
         KeyboardRow row1 = new KeyboardRow();
-        row1.add("Decimal Places");
-        row1.add("Bank");
+        row1.add(EmojiParser.parseToUnicode("\u0023\uFE0F\u20E3" + " Decimal Places"));
+        row1.add(EmojiParser.parseToUnicode("\uD83C\uDFE6" + " Bank"));
         keyboard.add(row1);
 
         KeyboardRow row2 = new KeyboardRow();
-        row2.add("Currencies");
-        row2.add("Notification Time");
+        row2.add(EmojiParser.parseToUnicode("\uD83D\uDCB2" + " Currencies"));
+        row2.add(EmojiParser.parseToUnicode("\u23F0" + " Notification Time"));
         keyboard.add(row2);
 
         KeyboardRow row3 = new KeyboardRow();
-        row3.add("Back To Main Menu");
+        row3.add(EmojiParser.parseToUnicode("\uD83C\uDFE0" + " Back To Main Menu"));
         keyboard.add(row3);
 
         keyboardMarkup.setKeyboard(keyboard);

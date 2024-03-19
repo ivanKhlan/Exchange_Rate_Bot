@@ -1,5 +1,6 @@
 package telegramBot.decimalPlaces;
 
+import com.vdurmont.emoji.EmojiParser;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -34,7 +35,7 @@ public class DecimalPlaces {
         keyboard.add(row2);
 
         KeyboardRow row3 = new KeyboardRow();
-        row3.add("Back");
+        row3.add(EmojiParser.parseToUnicode("\u2B05\uFE0F" + " Back"));
         keyboard.add(row3);
 
         keyboardMarkup.setKeyboard(keyboard);
@@ -50,9 +51,7 @@ public class DecimalPlaces {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setText("You set decimal place " + place);
-        System.out.println(usersData.getUserById(chatId).get().getNumOfCharacters());
         usersData.getUserById(chatId).get().setNumOfCharacters(place);
-        System.out.println(usersData.getUserById(chatId).get().getNumOfCharacters());
         try {
             botSender.execute(message);
         } catch (TelegramApiException e) {

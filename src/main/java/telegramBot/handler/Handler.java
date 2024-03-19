@@ -1,5 +1,6 @@
 package telegramBot.handler;
 
+import com.vdurmont.emoji.EmojiParser;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import telegramBot.decimalPlaces.DecimalPlaces;
 import telegramBot.notifications.Notifications;
@@ -30,62 +31,62 @@ public class Handler {
                 messageSender.sendStartMessage(chatId);
                 usersData.addUser(chatId);
                 break;
-            case "Get information":
+            case "Get information " + "\uD83D\uDDC8":
                 messageSender.sendInfoMessage(chatId, usersData);
                 break;
-            case "Settings":
+            case "Settings " + "\u2699\ufe0f":
                 messageSender.sendSettingsMessage(chatId);
                 break;
-            case "Decimal Places":
+            case "\u0023\uFE0F\u20E3" + " Decimal Places":
                 decimalPlaces.createDecimalPlacesMenu(chatId);
                 break;
-            case "Bank":
+            case "\uD83C\uDFE6" + " Bank":
                 messageSender.sendResponse(chatId, "You selected Bank setting.");
                 break;
-            case "Currencies":
+            case "\uD83D\uDCB2" + " Currencies":
                 messageSender.sendCurrencyOptions(chatId, currencyManager.getCurrenciesWithBackButton());
                 break;
-            case "Notification Time":
+            case "\u23F0" + " Notification Time":
                 notifications.createNotificationMenu(chatId);
                 break;
-            case "Back":
+            case "\u2B05\uFE0F" + " Back":
                 messageSender.sendSettingsMessage(chatId);
                 break;
-            case "Back To Main Menu":
+            case "\uD83C\uDFE0" + " Back To Main Menu":
                 messageSender.sendStartMessage(chatId);
                 break;
             case "09:00":
-                handleNotification(chatId, 9, "You will receive notification at 09:00");
+                handleNotification(chatId, 9, EmojiParser.parseToUnicode("\u2705" + " You will receive notification at 09:00"));
                 break;
             case "10:00":
-                handleNotification(chatId, 10, "You will receive notification at 10:00");
+                handleNotification(chatId, 10, EmojiParser.parseToUnicode("\u2705" + " You will receive notification at 10:00"));
                 break;
             case "11:00":
-                handleNotification(chatId, 11, "You will receive notification at 11:00");
+                handleNotification(chatId, 11, EmojiParser.parseToUnicode("\u2705" + " You will receive notification at 11:00"));
                 break;
             case "12:00":
-                handleNotification(chatId, 12, "You will receive notification at 12:00");
+                handleNotification(chatId, 12, EmojiParser.parseToUnicode("\u2705" + " You will receive notification at 12:00"));
                 break;
             case "13:00":
-                handleNotification(chatId, 13, "You will receive notification at 13:00");
+                handleNotification(chatId, 13, EmojiParser.parseToUnicode("\u2705" + " You will receive notification at 13:00"));
                 break;
             case "14:00":
-                handleNotification(chatId, 14, "You will receive notification at 14:00");
+                handleNotification(chatId, 14, EmojiParser.parseToUnicode("\u2705" + " You will receive notification at 14:00"));
                 break;
             case "15:00":
-                handleNotification(chatId, 15, "You will receive notification at 15:00");
+                handleNotification(chatId, 15, EmojiParser.parseToUnicode("\u2705" + " You will receive notification at 15:00"));
                 break;
             case "16:00":
-                handleNotification(chatId, 16, "You will receive notification at 16:00");
+                handleNotification(chatId, 16, EmojiParser.parseToUnicode("\u2705" + " You will receive notification at 16:00"));
                 break;
             case "17:00":
-                handleNotification(chatId, 17, "You will receive notification at 17:00");
+                handleNotification(chatId, 17, EmojiParser.parseToUnicode("\u2705" + " You will receive notification at 17:00"));
                 break;
             case "18:00":
-                handleNotification(chatId, 18, "You will receive notification at 18:00");
+                handleNotification(chatId, 18, EmojiParser.parseToUnicode("\u2705" + " You will receive notification at 18:00"));
                 break;
-            case "Don`t receive notifications":
-                handleNotification(chatId, 0, "You will not receive notifications");
+            case "\u274C" + " Don`t receive notifications":
+                handleNotification(chatId, 0, EmojiParser.parseToUnicode("\u274C" + " You will not receive notifications"));
                 break;
             case "1":
                 decimalPlaces.changeDecimalPlace(1,usersData,chatId);
