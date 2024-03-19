@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Notifications {
     private BotSender botSender = new BotSender();
+    private MessageSender messageSender = new MessageSender();
     private ScheduledExecutorService executor;
     public void createNotificationMenu(long chatId){
         SendMessage message = new SendMessage();
@@ -69,11 +70,11 @@ public class Notifications {
 
             executor = Executors.newSingleThreadScheduledExecutor();
 
-            LocalTime notificationTime = LocalTime.of(user.getNotificationTime(), 0);
+            LocalTime notificationTime = LocalTime.of(user.getNotificationTime(), 30);
             long initialDelay = computeInitialDelay(notificationTime);
             long period = 24 * 60 * 60 * 1000;
 
-            executor.scheduleAtFixedRate(() -> sendNotification(chatId), initialDelay, period, TimeUnit.MILLISECONDS);
+            executor.scheduleAtFixedRate(() -> messageSender.sendInfoMessage(chatId, usersData), initialDelay, period, TimeUnit.MILLISECONDS);
         } else {
             shutDownPrevious();
         }
@@ -84,11 +85,6 @@ public class Notifications {
         }
     }
 
-
-    private void sendNotification(long chatId) {
-        MessageSender messageSender = new MessageSender();
-        messageSender.sendResponse(chatId, "Your notifications");
-    }
 
     private long computeInitialDelay(LocalTime notificationTime) {
         LocalTime currentTime = LocalTime.now();
