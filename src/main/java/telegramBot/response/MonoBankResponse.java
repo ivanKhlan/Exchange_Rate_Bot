@@ -55,8 +55,8 @@ public class MonoBankResponse {
 
     private static DecimalFormat chooseDecimalFormat(int numberCharCurrency) {
         switch (numberCharCurrency) {
-            case 2:
-                return new DecimalFormat(PATTERN_DECIMAL_FORMAT_2);
+            case 1:
+                return new DecimalFormat(PATTERN_DECIMAL_FORMAT_1);
             case 3:
                 return new DecimalFormat(PATTERN_DECIMAL_FORMAT_3);
             case 4:

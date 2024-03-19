@@ -52,6 +52,7 @@ public class PrivatBankResponse {
     // Метод для відображення кількості знаків після коми
     private static DecimalFormat chooseDecimalFormat(int numberCharCurrency) {
         return switch (numberCharCurrency) {
+            case 1 -> new DecimalFormat(PATTERN_DECIMAL_FORMAT_1);
             case 3 -> new DecimalFormat(PATTERN_DECIMAL_FORMAT_3);
             case 4 -> new DecimalFormat(PATTERN_DECIMAL_FORMAT_4);
             default -> new DecimalFormat(PATTERN_DECIMAL_FORMAT_2);
