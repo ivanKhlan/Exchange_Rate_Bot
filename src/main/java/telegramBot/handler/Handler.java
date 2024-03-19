@@ -1,13 +1,10 @@
 package telegramBot.handler;
 
-import jdk.dynalink.linker.LinkerServices;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import telegramBot.decimalPlaces.DecimalPlaces;
 import telegramBot.notifications.Notifications;
-import telegramBot.users.UserSettings;
 import telegramBot.users.UsersData;
 import telegramBot.currency.CurrencyManager;
-
-import java.util.List;
 
 
 public class Handler {
@@ -15,6 +12,7 @@ public class Handler {
     private UsersData usersData = new UsersData();
     private Notifications notifications = new Notifications();
     private CurrencyManager currencyManager = new CurrencyManager();
+    private DecimalPlaces decimalPlaces = new DecimalPlaces();
 
 
     public void messageHandler(Update update){
@@ -39,7 +37,7 @@ public class Handler {
                 messageSender.sendSettingsMessage(chatId);
                 break;
             case "Decimal Places":
-                messageSender.sendResponse(chatId, "You selected Decimal Places setting.");
+                decimalPlaces.createDecimalPlacesMenu(chatId);
                 break;
             case "Bank":
                 messageSender.sendResponse(chatId, "You selected Bank setting.");
@@ -88,6 +86,18 @@ public class Handler {
                 break;
             case "Don`t receive notifications":
                 handleNotification(chatId, 0, "You will not receive notifications");
+                break;
+            case "1":
+                decimalPlaces.changeDecimalPlace(1,usersData,chatId);
+                break;
+            case "2":
+                decimalPlaces.changeDecimalPlace(2,usersData,chatId);
+                break;
+            case "3":
+                decimalPlaces.changeDecimalPlace(3,usersData,chatId);
+                break;
+            case "4":
+                decimalPlaces.changeDecimalPlace(4,usersData,chatId);
                 break;
             default:
 

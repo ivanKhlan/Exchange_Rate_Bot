@@ -50,6 +50,8 @@ public class NbuBankResponse {
     // Метод для відображення кількості знаків після коми
     private static DecimalFormat chooseDecimalFormat(int numberCharCurrency) {
         switch (numberCharCurrency) {
+            case 1:
+                return new DecimalFormat(PATTERN_DECIMAL_FORMAT_1);
             case 3:
                 return new DecimalFormat(PATTERN_DECIMAL_FORMAT_3);
             case 4:
