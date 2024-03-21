@@ -15,10 +15,11 @@ public class UserSettings {
     public UserSettings(){
         numOfCharacters = 2;
         banks = new ArrayList<>();
-        banks.add("privat");
+        banks.add("PrivatBank");
         currencies = new ArrayList<>();
         currencies.add("USD");
         notificationTime = 9;
     }
+
 
 }
