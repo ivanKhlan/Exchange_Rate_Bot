@@ -2,6 +2,7 @@ package telegramBot.users;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -14,24 +15,9 @@ public class UserSettings {
     public UserSettings(){
         numOfCharacters = 2;
         banks = List.of("privat");
-        currencies = List.of("usd");
+        currencies = new ArrayList<>();
+        currencies.add("USD");
         notificationTime = 9;
-    }
-
-    public void removeBank(String bankName){
-        banks.remove(bankName);
-    }
-
-    public void addBank(String bankName){
-        banks.add(bankName);
-    }
-
-    public void removeCurrency(String currencyName){
-        banks.remove(currencyName);
-    }
-
-    public void addCurrency(String currencyName){
-        banks.add(currencyName);
     }
 
 }

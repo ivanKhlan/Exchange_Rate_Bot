@@ -2,18 +2,18 @@ package telegramBot.handler;
 
 import com.vdurmont.emoji.EmojiParser;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import telegramBot.currency.CurrencyHandler;
 import telegramBot.decimalPlaces.DecimalPlaces;
 import telegramBot.notifications.Notifications;
 import telegramBot.users.UsersData;
-import telegramBot.currency.CurrencyManager;
 
 
 public class Handler {
     private MessageSender messageSender = new MessageSender();
     private UsersData usersData = new UsersData();
     private Notifications notifications = new Notifications();
-    private CurrencyManager currencyManager = new CurrencyManager();
     private DecimalPlaces decimalPlaces = new DecimalPlaces();
+    private CurrencyHandler currencyHandler = new CurrencyHandler();
 
 
     public void messageHandler(Update update){
@@ -44,7 +44,7 @@ public class Handler {
                 messageSender.sendResponse(chatId, "You selected Bank setting.");
                 break;
             case "\uD83D\uDCB2" + " Currencies":
-                messageSender.sendCurrencyOptions(chatId, currencyManager.getCurrenciesWithBackButton());
+                currencyHandler.createCurrencyMenu(chatId, usersData);
                 break;
             case "\u23F0" + " Notification Time":
                 notifications.createNotificationMenu(chatId);
@@ -100,20 +100,24 @@ public class Handler {
             case "4":
                 decimalPlaces.changeDecimalPlace(4,usersData,chatId);
                 break;
-            default:
-
-                if (messageText.startsWith("Select currency:")) {
-                    String currencyCode = messageText.substring(messageText.indexOf(":") + 2);
-                    if (currencyCode.equals("Back")) {
-                        messageSender.sendSettingsMessage(chatId);
-                    } else {
-                        currencyManager.toggleCurrencySelection(currencyCode);
-                        messageSender.sendCurrencyOptions(chatId, currencyManager.getCurrenciesWithBackButton());
-                    }
-                } else {
-                    messageSender.sendResponse(chatId, "Invalid setting selection.");
-                }
+            case "USD":
+                usersData.getUserById(chatId).get().getCurrencies().add("USD");
+                currencyHandler.createCurrencyMenu(chatId, usersData);
                 break;
+            case "EUR":
+                usersData.getUserById(chatId).get().getCurrencies().add("EUR");
+                currencyHandler.createCurrencyMenu(chatId, usersData);
+                break;
+            case "\u2705" + " USD":
+                usersData.getUserById(chatId).get().getCurrencies().remove("USD");
+                currencyHandler.createCurrencyMenu(chatId, usersData);
+                break;
+            case "\u2705" + " EUR":
+                usersData.getUserById(chatId).get().getCurrencies().remove("EUR");
+                currencyHandler.createCurrencyMenu(chatId, usersData);
+                break;
+            default:
+                messageSender.sendResponse(chatId, "Sorry, your command is incorrect");
         }
     }
 
