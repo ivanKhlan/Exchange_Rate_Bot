@@ -2,6 +2,7 @@ package telegramBot.handler;
 
 import com.vdurmont.emoji.EmojiParser;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import telegramBot.banks.BankHandler;
 import telegramBot.currency.CurrencyHandler;
 import telegramBot.decimalPlaces.DecimalPlaces;
 import telegramBot.notifications.Notifications;
@@ -14,6 +15,7 @@ public class Handler {
     private Notifications notifications = new Notifications();
     private DecimalPlaces decimalPlaces = new DecimalPlaces();
     private CurrencyHandler currencyHandler = new CurrencyHandler();
+    private BankHandler bankHandler = new BankHandler();
 
 
     public void messageHandler(Update update){
@@ -41,7 +43,7 @@ public class Handler {
                 decimalPlaces.createDecimalPlacesMenu(chatId);
                 break;
             case "\uD83C\uDFE6" + " Bank":
-                messageSender.sendResponse(chatId, "You selected Bank setting.");
+                bankHandler.createBanksMenu(chatId, usersData);
                 break;
             case "\uD83D\uDCB2" + " Currencies":
                 currencyHandler.createCurrencyMenu(chatId, usersData);
@@ -115,6 +117,30 @@ public class Handler {
             case "\u2705" + " EUR":
                 usersData.getUserById(chatId).get().getCurrencies().remove("EUR");
                 currencyHandler.createCurrencyMenu(chatId, usersData);
+                break;
+            case "NBU":
+                usersData.getUserById(chatId).get().getBanks().add("NBU");
+                bankHandler.createBanksMenu(chatId, usersData);
+                break;
+            case "PrivatBank":
+                usersData.getUserById(chatId).get().getBanks().add("PrivatBank");
+                bankHandler.createBanksMenu(chatId, usersData);
+                break;
+            case "Monobank":
+                usersData.getUserById(chatId).get().getBanks().add("Monobank");
+                bankHandler.createBanksMenu(chatId, usersData);
+                break;
+            case "\u2705" + " NBU":
+                usersData.getUserById(chatId).get().getBanks().remove("NBU");
+                bankHandler.createBanksMenu(chatId, usersData);
+                break;
+            case "\u2705" + " PrivatBank":
+                usersData.getUserById(chatId).get().getBanks().remove("PrivatBank");
+                bankHandler.createBanksMenu(chatId, usersData);
+                break;
+            case "\u2705" + " Monobank":
+                usersData.getUserById(chatId).get().getBanks().remove("Monobank");
+                bankHandler.createBanksMenu(chatId, usersData);
                 break;
             default:
                 messageSender.sendResponse(chatId, "Sorry, your command is incorrect");
