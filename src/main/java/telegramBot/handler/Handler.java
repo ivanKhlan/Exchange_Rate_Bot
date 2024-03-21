@@ -2,6 +2,7 @@ package telegramBot.handler;
 
 import com.vdurmont.emoji.EmojiParser;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import telegramBot.banks.Banks;
 import telegramBot.decimalPlaces.DecimalPlaces;
 import telegramBot.notifications.Notifications;
 import telegramBot.users.UsersData;
@@ -12,6 +13,7 @@ public class Handler {
     private MessageSender messageSender = new MessageSender();
     private UsersData usersData = new UsersData();
     private Notifications notifications = new Notifications();
+    private Banks banks = new Banks();
     private CurrencyManager currencyManager = new CurrencyManager();
     private DecimalPlaces decimalPlaces = new DecimalPlaces();
 
@@ -41,7 +43,16 @@ public class Handler {
                 decimalPlaces.createDecimalPlacesMenu(chatId);
                 break;
             case "\uD83C\uDFE6" + " Bank":
-                messageSender.sendResponse(chatId, "You selected Bank setting.");
+                banks.createBanksMenu(chatId);
+                break;
+            case "NBU":
+                banks.changeBank("NBU", usersData, chatId);
+                break;
+            case "PrivatBank":
+                banks.changeBank("PrivatBank", usersData, chatId);
+                break;
+            case "Monobank":
+                banks.changeBank("Monobank", usersData, chatId);
                 break;
             case "\uD83D\uDCB2" + " Currencies":
                 messageSender.sendCurrencyOptions(chatId, currencyManager.getCurrenciesWithBackButton());
@@ -122,4 +133,6 @@ public class Handler {
         notifications.applyNotification(chatId, usersData);
         messageSender.sendResponse(chatId, response);
     }
+
+
 }

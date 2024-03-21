@@ -120,6 +120,7 @@ public class MessageSender {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setText(response);
+
         try {
             botSender.execute(message);
         } catch (TelegramApiException e) {

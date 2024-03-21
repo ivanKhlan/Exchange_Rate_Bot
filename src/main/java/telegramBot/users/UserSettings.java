@@ -27,11 +27,11 @@ public class UserSettings {
     }
 
     public void removeCurrency(String currencyName){
-        banks.remove(currencyName);
+        currencies.remove(currencyName);
     }
 
     public void addCurrency(String currencyName){
-        banks.add(currencyName);
+        currencies.add(currencyName);
     }
 
 }
