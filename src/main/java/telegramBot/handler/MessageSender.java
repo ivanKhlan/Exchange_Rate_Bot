@@ -71,8 +71,17 @@ public class MessageSender {
         }
 
         SendMessage responseMessage = new SendMessage();
-        responseMessage.setText(String.valueOf(prettyText));
-        responseMessage.setChatId(Long.toString(chatId));
+        if (banks.isEmpty()) {
+            responseMessage.setText("\uD83E\uDD37\u200D\u2642\uFE0F" + "You haven't selected any bank");
+            responseMessage.setChatId(Long.toString(chatId));
+        } else if (currencies.isEmpty()) {
+            responseMessage.setText("\uD83E\uDD37\u200D\u2642\uFE0F" + "You haven`t selected any currency");
+            responseMessage.setChatId(Long.toString(chatId));
+        } else {
+            responseMessage.setText(String.valueOf(prettyText));
+            responseMessage.setChatId(Long.toString(chatId));
+        }
+
         try {
 
             botSender.execute(responseMessage);
