@@ -46,7 +46,7 @@ public class MonoBankResponse {
             for (MonoBank monoBank : currencyExchange) {
                 if (monoBank.getCurrencyCodeA() == currencyCode) {
                     String currencyName = getCurrencyName(currencyCode);
-                    return "Exchange rate in the Monobank:\n" + currencyName + "/UAH \nbuy: " + decimalFormat.format(monoBank.getRateSell()) + "\nsell: " + decimalFormat.format(monoBank.getRateBuy()) + "\n";
+                    return "\uD83D\uDD34" + " Exchange rate in the Monobank:\n\n" + "\uD83D\uDCB1" + currencyName + "/UAH \n" + "\uD83D\uDD3A" + " buy: " + decimalFormat.format(monoBank.getRateSell()) + "\n" + "\uD83D\uDD3B" + " sell: " + decimalFormat.format(monoBank.getRateBuy()) + "\n\n";
                 }
             }
         }

@@ -2,9 +2,8 @@ package telegramBot.users;
 
 import lombok.Data;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
 public class UsersData {

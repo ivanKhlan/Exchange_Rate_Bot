@@ -42,7 +42,7 @@ public class PrivatBankResponse {
         if (currencyExchange != null) {
             for (PrivatBank privatBank : currencyExchange) {
                 if (userCurrency.equalsIgnoreCase(privatBank.getCcy())) {
-                    return "Exchange rate in the PrivatBank:\n" + userCurrency.toUpperCase() + "/UAH \nbuy: " + decimalFormat.format(Double.parseDouble(privatBank.getSale())) + "\nsell: " + decimalFormat.format(Double.parseDouble(privatBank.getBuy())) + "\n";
+                    return "\uD83D\uDD34" + " Exchange rate in the PrivatBank:\n\n" + "\uD83D\uDCB1" + userCurrency.toUpperCase() + "/UAH \n" + "\uD83D\uDD3A" + " buy: " + decimalFormat.format(Double.parseDouble(privatBank.getSale())) + "\n" + "\uD83D\uDD3B" +" sell: " + decimalFormat.format(Double.parseDouble(privatBank.getBuy())) + "\n\n";
                 }
             }
         }
