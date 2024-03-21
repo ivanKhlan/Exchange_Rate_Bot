@@ -53,17 +53,17 @@ public class MessageSender {
 
         for (int i = 0; i < banks.size(); i++) {
 
-            if (banks.get(i).equals("mono")) {
+            if (banks.get(i).equals("Monobank")) {
                 for (int j = 0; j < currencies.size(); j++) {
                     prettyText.append(MonoBankResponse.getMonoBankCurrencyExchange(currencies.get(j), numOfCharacters));
                 }
 
-            } else if (banks.get(i).equals("privat")) {
+            } else if (banks.get(i).equals("PrivatBank")) {
                 for (int j = 0; j < currencies.size(); j++) {
                     prettyText.append(PrivatBankResponse.getPrivatBankCurrencyExchange(currencies.get(j), numOfCharacters));
                 }
 
-            } else if (banks.get(i).equals("nbu")) {
+            } else if (banks.get(i).equals("NBU")) {
                 for (int j = 0; j < currencies.size(); j++) {
                     prettyText.append(NbuBankResponse.getNbuBankCurrencyExchange(currencies.get(j), numOfCharacters));
                 }

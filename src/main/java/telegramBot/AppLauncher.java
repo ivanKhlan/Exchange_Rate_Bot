@@ -5,10 +5,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import telegramBot.extension.ExchangeRateBot;
 
-import static telegramBot.response.MonoBankResponse.*;
-import static telegramBot.response.NbuBankResponse.getNbuBankCurrencyExchange;
-import static telegramBot.response.PrivatBankResponse.getPrivatBankCurrencyExchange;
-
 public class AppLauncher {
 
     public static void main(String[] args) {
