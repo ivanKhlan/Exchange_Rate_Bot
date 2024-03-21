@@ -10,7 +10,6 @@ import telegramBot.response.NbuBankResponse;
 import telegramBot.response.PrivatBankResponse;
 import telegramBot.users.UsersData;
 import telegramBot.utils.BotSender;
-import telegramBot.currency.Currency;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,32 +126,4 @@ public class MessageSender {
         }
     }
 
-    public void sendCurrencyOptions(long chatId, List<Currency> currencies) {
-        SendMessage message = new SendMessage();
-        message.setChatId(chatId);
-        message.setText("Please select currencies:");
-
-        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-        keyboardMarkup.setResizeKeyboard(true);
-        List<KeyboardRow> keyboard = new ArrayList<>();
-
-        for (Currency currency : currencies) {
-            KeyboardRow row = new KeyboardRow();
-            if (currency.isSelected()) {
-                row.add("✔" + currency.getCode());
-            } else {
-                row.add(currency.getCode());
-            }
-            keyboard.add(row);
-        }
-
-        keyboardMarkup.setKeyboard(keyboard);
-        message.setReplyMarkup(keyboardMarkup);
-
-        try {
-            botSender.execute(message);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
 }
