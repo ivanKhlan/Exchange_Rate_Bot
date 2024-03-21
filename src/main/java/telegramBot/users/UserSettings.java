@@ -14,7 +14,8 @@ public class UserSettings {
 
     public UserSettings(){
         numOfCharacters = 2;
-        banks = List.of("privat");
+        banks = new ArrayList<>();
+        banks.add("privat");
         currencies = new ArrayList<>();
         currencies.add("USD");
         notificationTime = 9;
