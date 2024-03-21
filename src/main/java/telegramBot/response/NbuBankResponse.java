@@ -40,7 +40,7 @@ public class NbuBankResponse {
         if (currencyExchange != null) {
             for (NbuBank nbuBank : currencyExchange) {
                 if (userCurrency.equalsIgnoreCase(nbuBank.getCc())) {
-                    return "Exchange rate in the NBU: " + userCurrency.toUpperCase() + "/UAH \nbuy: " + decimalFormat.format(nbuBank.getRate()) + "\nsell: "  + decimalFormat.format(nbuBank.getRate());
+                    return "Exchange rate in the NBU:\n" + userCurrency.toUpperCase() + "/UAH \nbuy: " + decimalFormat.format(nbuBank.getRate()) + "\nsell: "  + decimalFormat.format(nbuBank.getRate()) + "\n";
                 }
             }
         }
