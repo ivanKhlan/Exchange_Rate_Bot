@@ -14,6 +14,8 @@ import telegramBot.utils.BotSender;
 import java.util.ArrayList;
 import java.util.List;
 
+import static telegramBot.response.BankConstants.*;
+
 public class MessageSender {
     private BotSender botSender = new BotSender();
 
@@ -54,19 +56,13 @@ public class MessageSender {
         for (int i = 0; i < banks.size(); i++) {
 
             if (banks.get(i).equals("Monobank")) {
-                for (int j = 0; j < currencies.size(); j++) {
-                    prettyText.append(MonoBankResponse.getMonoBankCurrencyExchange(currencies.get(j), numOfCharacters));
-                }
+                    prettyText.append(MonoBankResponse.getMonoBank(MONO_API, "Monobank", currencies, numOfCharacters));
 
             } else if (banks.get(i).equals("PrivatBank")) {
-                for (int j = 0; j < currencies.size(); j++) {
-                    prettyText.append(PrivatBankResponse.getPrivatBankCurrencyExchange(currencies.get(j), numOfCharacters));
-                }
+                    prettyText.append(PrivatBankResponse.getPrivatBank(PRIVAT_API, "PrivatBank", currencies, numOfCharacters));
 
             } else if (banks.get(i).equals("NBU")) {
-                for (int j = 0; j < currencies.size(); j++) {
-                    prettyText.append(NbuBankResponse.getNbuBankCurrencyExchange(currencies.get(j), numOfCharacters));
-                }
+                    prettyText.append(NbuBankResponse.getNbuBank(NBU_API, "NBU", currencies, numOfCharacters));
             }
         }
 
