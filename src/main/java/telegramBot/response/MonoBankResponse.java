@@ -18,39 +18,47 @@ public class MonoBankResponse {
 
 
     private static List<MonoBank> currencyExchange;
+    public static String getMonoBank(String api, String bank, List<String> currencies, int numberCharCurrency) {
+        MonoBankResponse.requestBank(api);
+        String message = "\uD83D\uDD34" + " Exchange rate in the " + bank + ":\n\n";
 
-    public static String getMonoBankCurrencyExchange(String UserCurrency, int numOfCharacters) {
+        for(String currency: currencies) {
+            message += displayCurrency(currency, numberCharCurrency);
+        }
+        return message;
+    }
+
+    private static List<MonoBank> requestBank(String api) {
         Gson gsonMapper = new GsonBuilder().setPrettyPrinting().create();
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(MONO_API))
+                .uri(URI.create(api))
                 .header("Content-Type", "application/json")
                 .GET()
                 .build();
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            currencyExchange = gsonMapper.fromJson(response.body(), new TypeToken<List<MonoBank>>() {}.getType());
-
-            int currencyCode = getMonoBankCurrencyCode(UserCurrency); // Отримати код валюти з рядка currency
-            return displayCurrency(currencyCode, numOfCharacters); // Викликати метод displayCurrency з отриманим кодом валюти та форматом числа
-        } catch (IOException | InterruptedException e) {
-            System.err.println("Error sending GET request: " + e.getMessage());
+            currencyExchange = gsonMapper.fromJson(response.body(), new TypeToken<List<MonoBank>>() {
+            }.getType());
+        }catch (IOException | InterruptedException e) {
+            System.out.println("Error sending GET request: " + e.getMessage());
         }
-        return "Error retrieving currency data.";
+        return currencyExchange;
     }
 
-    public static String displayCurrency(int currencyCode, int numOfCharacters) {
+
+    public static String displayCurrency(String currency, int numOfCharacters) {
         DecimalFormat decimalFormat = chooseDecimalFormat(numOfCharacters);
         if (currencyExchange != null) {
             for (MonoBank monoBank : currencyExchange) {
-                if (monoBank.getCurrencyCodeA() == currencyCode) {
-                    String currencyName = getCurrencyName(currencyCode);
-                    return "\uD83D\uDD34" + " Exchange rate in the Monobank:\n\n" + "\uD83D\uDCB1" + currencyName + "/UAH \n" + "\uD83D\uDD3A" + " buy: " + decimalFormat.format(monoBank.getRateSell()) + "\n" + "\uD83D\uDD3B" + " sell: " + decimalFormat.format(monoBank.getRateBuy()) + "\n\n";
+                if (monoBank.getCurrencyCodeA() == getMonoBankCurrencyCode(currency)) {
+                    String currencyName = getCurrencyName(getMonoBankCurrencyCode(currency));
+                    return "\uD83D\uDCB1" + currencyName + "/UAH \n" + "\uD83D\uDD3A" + " buy: " + decimalFormat.format(monoBank.getRateSell()) + "\n" + "\uD83D\uDD3B" + " sell: " + decimalFormat.format(monoBank.getRateBuy()) + "\n\n";
                 }
             }
         }
-        return "Currency with code " + currencyCode + " not found.";
+        return "Currency with code " + currency + " not found.";
     }
 
     private static DecimalFormat chooseDecimalFormat(int numberCharCurrency) {

@@ -16,38 +16,46 @@ import static telegramBot.response.BankConstants.*;
 
 public class PrivatBankResponse {
     private static List<PrivatBank> currencyExchange;
-
-    public static String getPrivatBankCurrencyExchange(String userCurrency, int numberCharCurrency) {
+    public static String getPrivatBank(String api, String bank, List<String> currencies, int numberCharCurrency) {
+        PrivatBankResponse.requestBank(api);
+        String message = "\uD83D\uDD34" + " Exchange rate in the " + bank + ":\n\n";
+        for(String currency: currencies) {
+            message += displayCurrency(currency, numberCharCurrency);
+        }
+        return message;
+    }
+    private static List<PrivatBank> requestBank(String api) {
         Gson gsonMapper = new GsonBuilder().setPrettyPrinting().create();
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(PRIVAT_API))
+                .uri(URI.create(api))
                 .header("Content-Type", "application/json")
                 .GET()
                 .build();
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            currencyExchange = gsonMapper.fromJson(response.body(), new TypeToken<List<PrivatBank>>() {}.getType());
-
-            return displayCurrency(userCurrency, numberCharCurrency); // Викликати метод displayCurrency з отриманим кодом валюти та форматом числа
-        } catch (IOException | InterruptedException e) {
+            currencyExchange = gsonMapper.fromJson(response.body(), new TypeToken<List<PrivatBank>>() {
+            }.getType());
+        }catch (IOException | InterruptedException e) {
             System.out.println("Error sending GET request: " + e.getMessage());
         }
-        return "Error retrieving currency data.";
+        return currencyExchange;
     }
 
-    private static String displayCurrency(String userCurrency, int numberCharCurrency) {
+    private static String displayCurrency(String currency, int numberCharCurrency) {
         DecimalFormat decimalFormat = chooseDecimalFormat(numberCharCurrency);
         if (currencyExchange != null) {
             for (PrivatBank privatBank : currencyExchange) {
-                if (userCurrency.equalsIgnoreCase(privatBank.getCcy())) {
-                    return "\uD83D\uDD34" + " Exchange rate in the PrivatBank:\n\n" + "\uD83D\uDCB1" + userCurrency.toUpperCase() + "/UAH \n" + "\uD83D\uDD3A" + " buy: " + decimalFormat.format(Double.parseDouble(privatBank.getSale())) + "\n" + "\uD83D\uDD3B" +" sell: " + decimalFormat.format(Double.parseDouble(privatBank.getBuy())) + "\n\n";
+                if (currency.equalsIgnoreCase(privatBank.getCcy())) {
+                    return "\uD83D\uDCB1" + currency.toUpperCase() + "/UAH \n" + "\uD83D\uDD3A" + " buy: " + decimalFormat.format(Double.parseDouble(privatBank.getSale())) + "\n" + "\uD83D\uDD3B" +" sell: " + decimalFormat.format(Double.parseDouble(privatBank.getBuy())) + "\n\n";
                 }
             }
         }
-        return "Currency with code " + userCurrency + " not found.";
+        return "Currency with code " + currency + " not found.";
     }
+
+
 
     // Метод для відображення кількості знаків після коми
     private static DecimalFormat chooseDecimalFormat(int numberCharCurrency) {
