@@ -55,18 +55,38 @@ public class MessageSender {
 
         for (int i = 0; i < banks.size(); i++) {
 
-            if (banks.get(i).equals("Monobank")) {
-                    prettyText.append(MonoBankResponse.getMonoBank(MONO_API, "Monobank", currencies, numOfCharacters));
+            createRowWithSelectedBanks(banks, i, prettyText, currencies, numOfCharacters);
 
-            } else if (banks.get(i).equals("PrivatBank")) {
-                    prettyText.append(PrivatBankResponse.getPrivatBank(PRIVAT_API, "PrivatBank", currencies, numOfCharacters));
-
-            } else if (banks.get(i).equals("NBU")) {
-                    prettyText.append(NbuBankResponse.getNbuBank(NBU_API, "NBU", currencies, numOfCharacters));
-            }
         }
 
         SendMessage responseMessage = new SendMessage();
+        checkSelectedBanksAndCurrencies(responseMessage, banks, currencies, chatId, prettyText);
+
+        try {
+
+            botSender.execute(responseMessage);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    
+    public void createRowWithSelectedBanks(List<String> banks, int i,
+                                           StringBuilder prettyText, List<String> currencies,
+                                           int numOfCharacters) {
+        switch (banks.get(i)) {
+            case "Monobank" ->
+                    prettyText.append(MonoBankResponse.getMonoBank(MONO_API, "Monobank", currencies, numOfCharacters));
+            case "PrivatBank" ->
+                    prettyText.append(PrivatBankResponse.getPrivatBank(PRIVAT_API, "PrivatBank", currencies, numOfCharacters));
+            case "NBU" -> prettyText.append(NbuBankResponse.getNbuBank(NBU_API, "NBU", currencies, numOfCharacters));
+        }
+        
+    }
+    
+    public void checkSelectedBanksAndCurrencies(SendMessage responseMessage,
+                                               List<String> banks, List<String> currencies,
+                                               long chatId, StringBuilder prettyText) {
         if (banks.isEmpty()) {
             responseMessage.setText("\uD83E\uDD37\u200D\u2642\uFE0F" + "You haven't selected any bank");
             responseMessage.setChatId(Long.toString(chatId));
@@ -77,14 +97,6 @@ public class MessageSender {
             responseMessage.setText(String.valueOf(prettyText));
             responseMessage.setChatId(Long.toString(chatId));
         }
-
-        try {
-
-            botSender.execute(responseMessage);
-        } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
     public void sendSettingsMessage(long chatId) {
