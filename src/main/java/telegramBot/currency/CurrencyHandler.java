@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CurrencyHandler {
-    private BotSender botSender = new BotSender();
     public void createCurrencyMenu(long chatId, UsersData usersData){
 
 
@@ -23,7 +22,7 @@ public class CurrencyHandler {
         createCurrencyButtons(chatId, usersData, message);
 
         try {
-            botSender.execute(message);
+            BotSender.getInstance().execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

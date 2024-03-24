@@ -5,10 +5,18 @@ import org.telegram.telegrambots.bots.DefaultBotOptions;
 
 public class BotSender extends DefaultAbsSender {
 
-    public BotSender() {
+    private static BotSender instance;
+
+    private BotSender() {
         super(new DefaultBotOptions());
     }
 
+    public static BotSender getInstance() {
+        if (instance == null) {
+            instance = new BotSender();
+        }
+        return instance;
+    }
 
     @Override
     public String getBotToken() {

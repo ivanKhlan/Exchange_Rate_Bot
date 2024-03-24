@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DecimalPlaces {
-    private BotSender botSender = new BotSender();
     private MessageSender messageSender = new MessageSender();
     public void createDecimalPlacesMenu(long chatId){
         SendMessage message = new SendMessage();
@@ -42,7 +41,7 @@ public class DecimalPlaces {
         message.setReplyMarkup(keyboardMarkup);
 
         try {
-            botSender.execute(message);
+            BotSender.getInstance().execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -53,7 +52,7 @@ public class DecimalPlaces {
         message.setText("You set decimal place " + place);
         usersData.getUserById(chatId).get().setNumOfCharacters(place);
         try {
-            botSender.execute(message);
+            BotSender.getInstance().execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

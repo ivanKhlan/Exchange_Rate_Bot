@@ -10,7 +10,6 @@ import telegramBot.utils.BotSender;
 import java.util.ArrayList;
 import java.util.List;
 public class BankHandler {
-    private BotSender botSender = new BotSender();
     public void BanksMenu(long chatId, UsersData usersData){
 
         SendMessage message = new SendMessage();
@@ -20,7 +19,7 @@ public class BankHandler {
         createBanksButtons(chatId, usersData, message);
 
         try {
-            botSender.execute(message);
+            BotSender.getInstance().execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

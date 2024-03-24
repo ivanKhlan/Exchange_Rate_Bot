@@ -17,8 +17,6 @@ import java.util.List;
 import static telegramBot.response.BankConstants.*;
 
 public class MessageSender {
-    private BotSender botSender = new BotSender();
-
 
     public void sendStartMessage(long chatId) {
         SendMessage message = new SendMessage();
@@ -38,7 +36,7 @@ public class MessageSender {
         message.setReplyMarkup(keyboardMarkup);
 
         try {
-            botSender.execute(message);
+            BotSender.getInstance().execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -64,7 +62,7 @@ public class MessageSender {
 
         try {
 
-            botSender.execute(responseMessage);
+            BotSender.getInstance().execute(responseMessage);
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
         }
@@ -126,7 +124,7 @@ public class MessageSender {
         message.setReplyMarkup(keyboardMarkup);
 
         try {
-            botSender.execute(message);
+            BotSender.getInstance().execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -137,7 +135,7 @@ public class MessageSender {
         message.setChatId(chatId);
         message.setText(response);
         try {
-            botSender.execute(message);
+            BotSender.getInstance().execute(message);
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
         }

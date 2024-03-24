@@ -19,7 +19,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Notifications {
-    private BotSender botSender = new BotSender();
     private MessageSender messageSender = new MessageSender();
     private ScheduledExecutorService executor;
     public void createNotificationMenu(long chatId){
@@ -56,7 +55,7 @@ public class Notifications {
         message.setReplyMarkup(keyboardMarkup);
 
         try {
-            botSender.execute(message);
+            BotSender.getInstance().execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -71,7 +70,7 @@ public class Notifications {
 
             executor = Executors.newSingleThreadScheduledExecutor();
 
-            LocalTime notificationTime = LocalTime.of(user.getNotificationTime(), 30);
+            LocalTime notificationTime = LocalTime.of(user.getNotificationTime(), 0);
             long initialDelay = computeInitialDelay(notificationTime);
             long period = 24 * 60 * 60 * 1000;
 
