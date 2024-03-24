@@ -6,6 +6,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import telegramBot.extension.ExchangeRateBot;
 
+import java.time.LocalTime;
+
 @Slf4j
 public class AppLauncher {
 
@@ -14,7 +16,7 @@ public class AppLauncher {
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(new ExchangeRateBot());
-            log.info("The Bot successfully started");
+            log.info("Bot successfully started at " + LocalTime.now());
         } catch (TelegramApiException e) {
             log.error(e.getMessage());
         }

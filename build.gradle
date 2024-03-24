@@ -26,8 +26,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.vdurmont/emoji-java
     implementation group: 'com.vdurmont', name: 'emoji-java', version: '5.1.1'
 
-    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.12'
+    implementation 'org.slf4j:slf4j-api:2.0.12'
+    runtimeOnly 'org.slf4j:slf4j-simple:2.0.12'
 
 
     // Lombok
