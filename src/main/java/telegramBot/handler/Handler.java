@@ -43,7 +43,7 @@ public class Handler {
                 decimalPlaces.createDecimalPlacesMenu(chatId);
                 break;
             case "\uD83C\uDFE6" + " Bank":
-                bankHandler.createBanksMenu(chatId, usersData);
+                bankHandler.BanksMenu(chatId, usersData);
                 break;
             case "\uD83D\uDCB2" + " Currencies":
                 currencyHandler.createCurrencyMenu(chatId, usersData);
@@ -120,27 +120,27 @@ public class Handler {
                 break;
             case "NBU":
                 usersData.getUserById(chatId).get().getBanks().add("NBU");
-                bankHandler.createBanksMenu(chatId, usersData);
+                bankHandler.BanksMenu(chatId, usersData);
                 break;
             case "PrivatBank":
                 usersData.getUserById(chatId).get().getBanks().add("PrivatBank");
-                bankHandler.createBanksMenu(chatId, usersData);
+                bankHandler.BanksMenu(chatId, usersData);
                 break;
             case "Monobank":
                 usersData.getUserById(chatId).get().getBanks().add("Monobank");
-                bankHandler.createBanksMenu(chatId, usersData);
+                bankHandler.BanksMenu(chatId, usersData);
                 break;
             case "\u2705" + " NBU":
                 usersData.getUserById(chatId).get().getBanks().remove("NBU");
-                bankHandler.createBanksMenu(chatId, usersData);
+                bankHandler.BanksMenu(chatId, usersData);
                 break;
             case "\u2705" + " PrivatBank":
                 usersData.getUserById(chatId).get().getBanks().remove("PrivatBank");
-                bankHandler.createBanksMenu(chatId, usersData);
+                bankHandler.BanksMenu(chatId, usersData);
                 break;
             case "\u2705" + " Monobank":
                 usersData.getUserById(chatId).get().getBanks().remove("Monobank");
-                bankHandler.createBanksMenu(chatId, usersData);
+                bankHandler.BanksMenu(chatId, usersData);
                 break;
             default:
                 messageSender.sendResponse(chatId, "Sorry, your command is incorrect");

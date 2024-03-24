@@ -14,12 +14,23 @@ import java.util.List;
 public class CurrencyHandler {
     private BotSender botSender = new BotSender();
     public void createCurrencyMenu(long chatId, UsersData usersData){
-        List<String> currencies = usersData.getUserById(chatId).get().getCurrencies();
+
 
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setText("Please choose a currency");
 
+        createCurrencyButtons(chatId, usersData, message);
+
+        try {
+            botSender.execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createCurrencyButtons(long chatId, UsersData usersData, SendMessage message) {
+        List<String> currencies = usersData.getUserById(chatId).get().getCurrencies();
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         keyboardMarkup.setResizeKeyboard(true);
         List<KeyboardRow> keyboard = new ArrayList<>();
@@ -47,11 +58,5 @@ public class CurrencyHandler {
 
         keyboardMarkup.setKeyboard(keyboard);
         message.setReplyMarkup(keyboardMarkup);
-
-        try {
-            botSender.execute(message);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
     }
 }
