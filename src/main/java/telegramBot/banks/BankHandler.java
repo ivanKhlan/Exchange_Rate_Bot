@@ -11,33 +11,44 @@ import java.util.ArrayList;
 import java.util.List;
 public class BankHandler {
     private BotSender botSender = new BotSender();
-    public void createBanksMenu(long chatId, UsersData usersData){
-        List<String> currencies = usersData.getUserById(chatId).get().getBanks();
+    public void BanksMenu(long chatId, UsersData usersData){
 
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setText("Please choose a bank");
+
+        createBanksButtons(chatId, usersData, message);
+
+        try {
+            botSender.execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createBanksButtons(long chatId, UsersData usersData, SendMessage message) {
+        List<String> banks = usersData.getUserById(chatId).get().getBanks();
 
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         keyboardMarkup.setResizeKeyboard(true);
         List<KeyboardRow> keyboard = new ArrayList<>();
 
         KeyboardRow row1 = new KeyboardRow();
-        if (currencies.contains("NBU")){
+        if (banks.contains("NBU")){
             row1.add(EmojiParser.parseToUnicode("\u2705" + " NBU"));
         }
         else {
             row1.add("NBU");
         }
 
-        if (currencies.contains("PrivatBank")){
+        if (banks.contains("PrivatBank")){
             row1.add(EmojiParser.parseToUnicode("\u2705" + " PrivatBank"));
         }
         else {
             row1.add("PrivatBank");
         }
 
-        if (currencies.contains("Monobank")){
+        if (banks.contains("Monobank")){
             row1.add(EmojiParser.parseToUnicode("\u2705" + " Monobank"));
         }
         else {
@@ -52,11 +63,5 @@ public class BankHandler {
 
         keyboardMarkup.setKeyboard(keyboard);
         message.setReplyMarkup(keyboardMarkup);
-
-        try {
-            botSender.execute(message);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
     }
 }
