@@ -3,10 +3,11 @@ package telegramBot.users;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Data
+@Slf4j
 public class UsersData {
     private Map<Long, UserSettings> users;
 
@@ -17,7 +18,7 @@ public class UsersData {
     public void addUser(long chatId){
         if(!containsUser(chatId)) {
             users.put(chatId, new UserSettings());
-            System.out.println("New user added, chatId: " + chatId + ", " + users.get(chatId).toString());
+            log.info("New user added, chatId: " + chatId + ", " + users.get(chatId).toString() + "; created time: " + LocalTime.now());
         }
     }
 
